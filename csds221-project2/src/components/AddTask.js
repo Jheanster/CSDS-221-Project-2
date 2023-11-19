@@ -2,12 +2,16 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import './AddTask.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const AddTask = ({ show, handleClose, onAddTask }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
-    const [priority, setPriority] = useState(''); // New state for priority
+    const [priority, setPriority] = useState(''); 
     const [validated, setValidated] = useState(false);
 
     const handleAddTask = (event) => {
@@ -15,8 +19,7 @@ const AddTask = ({ show, handleClose, onAddTask }) => {
         const form = event.currentTarget;
 
         if (form.checkValidity() === false) {
-        
-        event.stopPropagation();
+          event.stopPropagation();
         }
 
         setValidated(true);
@@ -49,7 +52,7 @@ const AddTask = ({ show, handleClose, onAddTask }) => {
         {/* Update the state when input values change */}
         <Form noValidate validated={validated} onSubmit={handleAddTask}>
           {/* Title input */}
-          <Form.Group controlId="title">
+          <Form.Group controlId="title" className='form-group'>
             <Form.Label>Title</Form.Label>
             <Form.Control
               required
@@ -64,7 +67,7 @@ const AddTask = ({ show, handleClose, onAddTask }) => {
           </Form.Group>
 
           {/* Description input */}
-          <Form.Group controlId="description">
+          <Form.Group controlId="description" className='form-group'>
             <Form.Label>Description</Form.Label>
             <Form.Control
               required
@@ -80,7 +83,7 @@ const AddTask = ({ show, handleClose, onAddTask }) => {
           </Form.Group>
 
             {/* Date input */}
-            <Form.Group controlId="date">
+            <Form.Group controlId="date" className='form-group'>
                 <Form.Label>Deadline</Form.Label>
                 <Form.Control
                 type="date"
@@ -90,7 +93,7 @@ const AddTask = ({ show, handleClose, onAddTask }) => {
             </Form.Group>
 
             {/* Priority input */}
-            <Form.Group controlId="priority">
+            <Form.Group controlId="priority" className='form-group'>
                 <Form.Label>Priority</Form.Label>
                 <div>
                 <Form.Check
@@ -122,12 +125,16 @@ const AddTask = ({ show, handleClose, onAddTask }) => {
                 />
                 </div>
             </Form.Group>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="primary" type="submit">
-            Add
-          </Button>
+          <Container>
+            <Row>
+              <Col md={{ offset: 7 }}>
+                <Button variant="primary" size='lg' type="submit">Add</Button>
+                <Button variant="danger" size='lg' onClick={handleClose}>Cancel</Button>
+              </Col>
+            </Row>
+          </Container>
+          
+          
         </Form>
       </Modal.Body>
     </Modal>

@@ -20,14 +20,14 @@ const Header = ({ onAddTask }) => {
 
     return (
         <div className="header">
-        <div className="title">
-            <FontAwesomeIcon icon={faBars} className="icon" />
-            Frameworks
-        </div>
-        <Button className="btn btn-primary" onClick={handleShow}>
-            Add
-        </Button>
-        <AddTask show={showPanel} handleClose={handleClose} onAddTask={handleAddTaskLocal} />
+            <div className="title">
+                <FontAwesomeIcon icon={faBars} className="icon" />
+                Frameworks
+            </div>
+            <Button className="btn btn-primary" onClick={handleShow}>
+                Add
+            </Button>
+            <AddTask show={showPanel} handleClose={handleClose} onAddTask={handleAddTaskLocal} />
         </div>
     );
 };
