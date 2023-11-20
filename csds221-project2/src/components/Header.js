@@ -4,32 +4,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
-import AddTask from './AddTask';
 import './Header.css';
+import TaskForm from './TaskForm';
 
 const Header = ({ onAddTask }) => {
-    const [showPanel, setShowPanel] = useState(false);
+  const [showPanel, setShowPanel] = useState(false);
 
-    const handleShow = () => setShowPanel(true);
-    const handleClose = () => setShowPanel(false);
+  const handleShow = () => setShowPanel(true);
+  const handleClose = () => setShowPanel(false);
 
-    const handleAddTaskLocal = (task) => {
-        onAddTask(task);
-        handleClose();
-    };
+  const handleAddTaskLocal = (task) => {
+    onAddTask(task);
+    handleClose();
+  };
 
-    return (
-        <div className="header">
-            <div className="title">
-                <FontAwesomeIcon icon={faBars} className="icon" />
-                Frameworks
-            </div>
-            <Button className="btn btn-primary" onClick={handleShow}>
-                Add
-            </Button>
-            <AddTask show={showPanel} handleClose={handleClose} onAddTask={handleAddTaskLocal} />
-        </div>
-    );
+  return (
+    <div className="header">
+      <div className="title">
+        <FontAwesomeIcon icon={faBars} className="icon" />
+        Frameworks
+      </div>
+      <Button className="btn btn-primary" onClick={handleShow}>
+        Add
+      </Button>
+
+      <TaskForm show={showPanel} handleClose={handleClose} onSubmit={handleAddTaskLocal} />
+    </div>
+  );
 };
 
 export default Header;
