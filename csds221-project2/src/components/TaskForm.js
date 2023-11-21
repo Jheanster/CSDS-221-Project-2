@@ -26,6 +26,7 @@ const TaskForm = ({ show, handleClose, onSubmit, task, existingTitles = [] }) =>
       setDate(task.date || '');
       setPriority(task.priority || '');
     }
+  
   }, [task]);
 
   const handleTitleChange = (newTitle) => {
@@ -66,6 +67,7 @@ const TaskForm = ({ show, handleClose, onSubmit, task, existingTitles = [] }) =>
 
       // Close the modal
       handleClose();
+      setTitle('');
       setDescription('');
       setDate('');
       setPriority('');
@@ -95,20 +97,20 @@ const TaskForm = ({ show, handleClose, onSubmit, task, existingTitles = [] }) =>
           {/* Conditionally render the Title input */}
           {!task && (
             <Form.Group controlId="title" className="form-group">
-          <Form.Label>Title</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => handleTitleChange(e.target.value)}
-            isInvalid={isDuplicateTitle}
-          />
-          <Form.Control.Feedback type="invalid">
-            {isDuplicateTitle && 'Must have a unique title!'}
-            {!isDuplicateTitle && 'Title is required!'}
-          </Form.Control.Feedback>
-        </Form.Group>
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => handleTitleChange(e.target.value)}
+                isInvalid={isDuplicateTitle}
+              />
+              <Form.Control.Feedback type="invalid">
+                {isDuplicateTitle && 'Must have a unique title!'}
+                {!isDuplicateTitle && 'Title is required!'}
+              </Form.Control.Feedback>
+            </Form.Group>
           )}
 
           {/* Description input */}

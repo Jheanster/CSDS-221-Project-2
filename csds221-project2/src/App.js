@@ -31,7 +31,7 @@ function App() {
 
   return (
     <div>
-      <Header onAddTask={handleAddTask} />
+      <Header tasks={tasks} onAddTask={handleAddTask} />
       <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar={false} />
       <TaskList tasks={tasks} onDelete={handleDelete} onUpdate={handleUpdate} onEditTask={handleUpdate} />
     </div>

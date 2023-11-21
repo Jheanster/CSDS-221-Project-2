@@ -1,5 +1,5 @@
 // TaskList.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,14 +14,7 @@ const TaskList = ({ tasks, onDelete, onEditTask }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [checkedRows, setCheckedRows] = useState([]);
 
-  const [existingTitles, setExistingTitles] = useState([]);
-
-  useEffect(() => {
-    const titles = tasks.map((task) => task.title);
-    setExistingTitles(titles);
-  }, [tasks]);
-
-
+ 
   const handleShow = (task) => {
     setSelectedTask(task);
     setShowPanel(true);
@@ -115,7 +108,6 @@ const TaskList = ({ tasks, onDelete, onEditTask }) => {
         handleClose={handleClose}
         onSubmit={handleEditTaskLocal}
         task={selectedTask}
-        existingTitles={existingTitles}
       />
     </div>
   );
