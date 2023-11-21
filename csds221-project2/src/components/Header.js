@@ -1,7 +1,7 @@
 // Header.js
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import './Header.css';
@@ -24,8 +24,8 @@ const Header = ({ onAddTask }) => {
         <FontAwesomeIcon icon={faBars} className="icon" />
         Frameworks
       </div>
-      <Button className="btn btn-primary" onClick={handleShow}>
-        Add
+      <Button variant='primary' onClick={handleShow}>
+        <FontAwesomeIcon icon={faCirclePlus} /> Add
       </Button>
 
       <TaskForm show={showPanel} handleClose={handleClose} onSubmit={handleAddTaskLocal} />

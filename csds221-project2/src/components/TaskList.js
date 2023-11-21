@@ -1,18 +1,42 @@
 // TaskList.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TaskForm from './TaskForm';
 import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleXmark, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
-const TaskList = ({ tasks, onDelete, onAddTask, onEditTask }) => {
+
+const TaskList = ({ tasks, onDelete, onEditTask }) => {
   const [showPanel, setShowPanel] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [checkedRows, setCheckedRows] = useState([]);
+
+  const [existingTitles, setExistingTitles] = useState([]);
+
+  useEffect(() => {
+    const titles = tasks.map((task) => task.title);
+    setExistingTitles(titles);
+  }, [tasks]);
+
 
   const handleShow = (task) => {
     setSelectedTask(task);
     setShowPanel(true);
+  };
+
+  const handleCheckChange = (id) => {
+    setCheckedRows((prevCheckedRows) => {
+      if (prevCheckedRows.includes(id)) {
+        // If the row is already checked, remove it from the checkedRows
+        return prevCheckedRows.filter((rowId) => rowId !== id);
+      } else {
+        // If the row is not checked, add it to the checkedRows
+        return [...prevCheckedRows, id];
+      }
+    });
   };
 
   const handleClose = () => {
@@ -25,8 +49,6 @@ const TaskList = ({ tasks, onDelete, onAddTask, onEditTask }) => {
     handleClose();
   };
 
-
-
   const removeRow = (id) => {
     const taskIndex = tasks.findIndex((task) => task.id === id);
 
@@ -34,13 +56,21 @@ const TaskList = ({ tasks, onDelete, onAddTask, onEditTask }) => {
       const dataCopy = [...tasks];
       dataCopy.splice(taskIndex, 1);
       onDelete(dataCopy);
-      toast.success('Task removed successfully!', { position: 'bottom-left' });
+      toast.success('Task removed successfully!');
     }
   };
 
   return (
     <div>
       <Table striped bordered hover>
+        <colgroup>
+          <col style={{ width: '20%' }} />
+          <col style={{ width: '20%' }} />
+          <col style={{ width: '20%' }} />
+          <col style={{ width: '20%' }} />
+          <col style={{ width: '10%' }} />
+          <col style={{ width: '10%' }} />
+        </colgroup>
         <thead>
           <tr>
             <th>Title</th>
@@ -59,14 +89,21 @@ const TaskList = ({ tasks, onDelete, onAddTask, onEditTask }) => {
               <td>{moment(task.date).format('MM/DD/YYYY')}</td>
               <td>{task.priority}</td>
               <td>
-                <input type="checkbox" checked={task.isComplete} readOnly />
+                <input
+                  type="checkbox"
+                  checked={checkedRows.includes(task.id)}
+                  onChange={() => handleCheckChange(task.id)}
+                />
               </td>
               <td>
-                <Button variant="info" onClick={() => handleShow(task)}>
-                  Update
-                </Button>{' '}
-                <Button onClick={() => removeRow(task.id)} variant="danger">
-                  Delete
+                {!checkedRows.includes(task.id) && (
+                  <Button variant="primary" onClick={() => handleShow(task)} className='buttons'>
+                    <FontAwesomeIcon icon={faPenToSquare} /> Update
+                  </Button>
+                )}
+                {' '}
+                <Button onClick={() => removeRow(task.id)} variant="danger" className='buttons'>
+                  <FontAwesomeIcon icon={faCircleXmark} /> Delete
                 </Button>
               </td>
             </tr>
@@ -78,6 +115,7 @@ const TaskList = ({ tasks, onDelete, onAddTask, onEditTask }) => {
         handleClose={handleClose}
         onSubmit={handleEditTaskLocal}
         task={selectedTask}
+        existingTitles={existingTitles}
       />
     </div>
   );
